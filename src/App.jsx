@@ -35,6 +35,12 @@ class App extends React.Component {
 
   /*Write an addStudent method here*/
 
+  addStudent(studentName) {
+    this.setState({
+      students: this.state.students.concat(studentName) // 왜 하필 concat 을 사용해야 하나
+    })
+  }
+
   addGrade(assignment, student, score) {
     let grades = this.state.grades;
     let assignmentName = assignment;
