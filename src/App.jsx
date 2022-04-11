@@ -15,7 +15,6 @@ class App extends React.Component {
 
     this.handleButtonClicked = this.handleButtonClicked.bind(this);
     this.addAssignment = this.addAssignment.bind(this);
-    /*Uncomment the line below to bind the method*/
     this.addStudent = this.addStudent.bind(this);   // call, apply 와 유사
     this.addGrade = this.addGrade.bind(this);
   }
