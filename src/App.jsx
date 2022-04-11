@@ -45,7 +45,7 @@ class App extends React.Component {
     this.setState({ grades: grades });
   }
 
-  render() {
+  render() {  // render 함수는 useEffect 역할을 하는가?
     let tabChoice = <div />;
 
     /*Uncomment below to render assignments*/
