@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from "@testing-library/user-event";
 import List from "./List";
 
@@ -19,7 +19,23 @@ const arr = ['Lee', "Holand"];
 
 describe('React App Test', () => {
 
-  it('List Test', async () => {
+  it('Show List Test', async () => {
+    const { debug } = render(<App/ >);
+
+    const listButton = screen.getByText('Assignments');
+    console.log(listButton.outerHTML);
+
+    userEvent.click(listButton);
+
+    await waitFor(() => {
+      expect(screen.getByPlaceholderText('Add Assignment...'));
+      
+      debug();
+    })
+
+  });
+
+  it.skip('List Test', async () => {
     const component = <List addFunction={addItem} title="title" placeholder='somethin' currList={arr} />;
     const {debug} = render(component);
 
