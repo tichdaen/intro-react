@@ -16,6 +16,9 @@
     > `it.skip('could be skipped', () => func...)`  
         Skip 될 테스트함수  
   
+## testing-library
+
+- `waitFor`
 
 ## User-Event
 
