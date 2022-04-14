@@ -18,7 +18,17 @@
   
 ## testing-library
 
+- `Queries`
+  > 몇가지의 쿼리가 존재 ( `get`, `find`, `query` )  
+  이들의 차이점은 컴포넌트를 찾지 못했을 때 에러를 던질지, `Promise` 객체를 던져 다시 시도할지로 구분된다.  
+  
+  - `getByRole` : 
+  - `getByLabelText` : 
+  - `getByText` : 반응형이 아닌 `div`, `span`, `paragraph` 를 찾는데 주로 사용
+  - `getByDisplayValue` : 
+
 - `waitFor`
+  - 뭘 wait 하냐
 
 ## User-Event
 
