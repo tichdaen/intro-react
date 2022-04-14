@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from '../App';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { findByText, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from "@testing-library/user-event";
 import List from "../List";
 
@@ -30,13 +30,22 @@ describe('React App Test', () => {
   it('List Click Event', async () => {
     const { debug } = render(<App />);
     const listButton = screen.getByText('Assignments');
-    fireEvent(listButton, new MouseEvent('click'))
+
+    fireEvent.click(listButton);
 
     waitFor(() => {
-      expect(screen.getByText('Add Assignment...')).toBeInTheDocument();
+      expect(screen.findByText('Add Assignment...')).toBeInTheDocument();
+    });
+    
+    debug();
 
-      debug();
-    }) 
+    // waitFor(() => {
+    //   expect(screen.getByText('Add Assignment...')).toBeInTheDocument();
+
+    //   debug();
+    // }) 
+    
+
   });
 
   it.skip('List Test', async () => {

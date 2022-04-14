@@ -22,13 +22,19 @@
   > 몇가지의 쿼리가 존재 ( `get`, `find`, `query` )  
   이들의 차이점은 컴포넌트를 찾지 못했을 때 에러를 던질지, `Promise` 객체를 던져 다시 시도할지로 구분된다.  
   
-  - `getByRole` : 
-  - `getByLabelText` : 
+  - `getBy...` : 일치하는 노드를 리턴. 일치하는게 없거나, 하나이상이 발견된다면 예외를 던진다.
+  - `queryBy...` : 일치하는 노드를 리턴. 일치하는게 없다면 `null` 을 리턴
+  - `findBy...` : `Promise` 를 리턴. 1000ms 동안 ( default ) 일치하는게 없다면 `reject`
+
+  - `getByRole` :  
+    Ex) `getByRole('button', {name: /submit/i})`
+  - `getByLabelText` : `<label>` 이 붙어있는 `<form>` 폼 필드에서 매우 유용
   - `getByText` : 반응형이 아닌 `div`, `span`, `paragraph` 를 찾는데 주로 사용
-  - `getByDisplayValue` : 
+  - `getByDisplayValue` : 폼 형태의 value 값이 많은 페이지에 유용
 
 - `waitFor`
   - 뭘 wait 하냐
+  - 참고로 `waitFor` 는 `setTimeOut` 처럼 동작하지 않는다. 순차적으로 동작
 
 ## User-Event
 
