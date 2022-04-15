@@ -1,6 +1,61 @@
-import React from "react";
+import React, { useState } from "react";
 import Table from "./Table";
 import List from "./List";
+import { render } from "@testing-library/react";
+
+const AppHook = () => {
+  const [buttonClicked, setButtonClicked] = useState('');
+  const [assignments, setAssignments] = useState([]);
+  const [students, setStudents] = useState([]);
+  const [grades, setGrades] = useState({});
+
+  const handleButtonClicked = buttonName => setButtonClicked(buttonName);
+
+  const addAssignment = assignmentName => setAssignments(assignments.concat(assignmentName));
+
+  const addStudent = studentName => setStudents(students.concat(studentName));
+
+  const addGrade = (assignment, studentName, score) => {
+    if (!(assignment in grades)) {
+      grades[assignment] = {};
+    }
+    grades[assignmentName][studentName] = score;
+    setGrades(grades);
+  }
+
+  return (
+    <div>
+        <div className="Box Box--spacious f4">
+          <div className="Box-header">
+          <h3 className="Box-title d-flex flex-justify-center">GradeBook</h3>
+          </div>
+        </div>
+        <nav className="UnderlineNav d-flex flex-justify-center">
+          <div className="UnderlineNav-body pt-6">
+            <button
+              className="btn btn-primary"
+              onClick={() => handleButtonClicked("assignments")}
+            >
+              Assignments
+            </button>
+            <button
+              className="btn btn-primary"
+              onClick={() => handleButtonClicked("students")}
+            >
+              Students
+            </button>
+            <button
+              className="btn btn-primary"
+              onClick={() => handleButtonClicked("grades")}
+            >
+              Grades
+            </button>
+          </div>
+        </nav>
+        {tabChoice}
+      </div>
+  )
+}
 
 class App extends React.Component {
   constructor(props) {
