@@ -1,27 +1,68 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Table from "./Table";
 import List from "./List";
-import { render } from "@testing-library/react";
 
 const AppHook = () => {
   const [buttonClicked, setButtonClicked] = useState('');
   const [assignments, setAssignments] = useState([]);
   const [students, setStudents] = useState([]);
   const [grades, setGrades] = useState({});
+  const [tabChoice, setTabChoice] = useState(<div/>);
 
   const handleButtonClicked = buttonName => setButtonClicked(buttonName);
 
-  const addAssignment = assignmentName => setAssignments(assignments.concat(assignmentName));
+  useEffect(() => {
 
-  const addStudent = studentName => setStudents(students.concat(studentName));
 
-  const addGrade = (assignment, studentName, score) => {
-    if (!(assignment in grades)) {
-      grades[assignment] = {};
+    const addAssignment = assignmentName => setAssignments(assignments.concat(assignmentName));
+
+    const addStudent = studentName => setStudents(students.concat(studentName));
+
+    const addGrade = (assignment, studentName, score) => {
+      if (!(assignment in grades)) {
+        grades[assignment] = {};
+      }
+      grades[assignment][studentName] = score;
+      setGrades(grades);
     }
-    grades[assignmentName][studentName] = score;
-    setGrades(grades);
-  }
+    /*Uncomment below to render assignments*/
+    if (buttonClicked === "assignments") {
+      let choice =
+        <List
+          placeholder="Add Assignment..."
+          currList={assignments}
+          addFunction={addAssignment}
+          title="Assignments"
+        />
+      ;
+      setTabChoice(choice);
+    }
+    /* Change below to render students*/
+    if (buttonClicked === "students") {
+      let choice =
+        <List
+          placeholder="Add Student..." 
+          currList={students}
+          addFunction={addStudent}
+          title="Student Roster"
+        />
+      ;
+      setTabChoice(choice);
+    }
+
+    /* Uncomment lines below to render grades*/
+    if (buttonClicked === "grades") {
+      let choice = 
+        <Table
+          tableNames={assignments}
+          rows={students}
+          addFunction={addGrade}
+          data={grades}
+        />
+      ;
+      setTabChoice(choice);
+    }
+  }, [buttonClicked, assignments, students, grades])
 
   return (
     <div>
@@ -57,125 +98,4 @@ const AppHook = () => {
   )
 }
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      buttonClicked: "",
-      assignments: [] /*Below this line, add the students state variable*/,
-      students: [],
-      grades: {}
-    };
-
-    this.handleButtonClicked = this.handleButtonClicked.bind(this);
-    this.addAssignment = this.addAssignment.bind(this);
-    this.addStudent = this.addStudent.bind(this);
-    this.addGrade = this.addGrade.bind(this);
-  }
-
-  handleButtonClicked(buttonName) {
-    this.setState({
-      buttonClicked: buttonName
-    });
-  }
-
-  /*Check out this addAssignment method*/
-  addAssignment(assignmentName) {
-    this.setState({
-      assignments: this.state.assignments.concat(assignmentName)
-    });
-  }
-
-  /*Write an addStudent method here*/
-  addStudent(studentName) {
-    this.setState({
-      students: this.state.students.concat(studentName) // 왜 하필 concat 을 사용해야 하나
-    })
-  }
-
-  addGrade(assignment, student, score) {
-    let grades = this.state.grades;
-    let assignmentName = assignment;
-    let studentName = student;
-    if (!(assignment in grades)) {
-      grades[assignmentName] = {};
-    }
-    grades[assignmentName][studentName] = score;
-    this.setState({ grades: grades });
-  }
-
-  render() {  // render 함수는 useEffect 역할을 하는가?
-    let tabChoice = <div />;
-
-    /*Uncomment below to render assignments*/
-    if (this.state.buttonClicked === "assignments") {
-      tabChoice = (
-        <List
-          placeholder="Add Assignment..."
-          currList={this.state.assignments}
-          addFunction={this.addAssignment}
-          title="Assignments"
-        />
-      );
-    }
-    /* Change below to render students*/
-    if (this.state.buttonClicked === "students") {
-      tabChoice = (
-        <List
-          placeholder="Add Student..." 
-          currList={this.state.students}
-          addFunction={this.addStudent}
-          title="Student Roster"
-        />
-      );
-    }
-
-    /* Uncomment lines below to render grades*/
-    if (this.state.buttonClicked === "grades") {
-      tabChoice = (
-        <Table
-          tableNames={this.state.assignments}
-          rows={this.state.students}
-          addFunction={this.addGrade}
-          data={this.state.grades}
-        />
-      );
-    }
-
-    return (
-      <div>
-        <div className="Box Box--spacious f4">
-          <div className="Box-header">
-          <h3 className="Box-title d-flex flex-justify-center">GradeBook</h3>
-          </div>
-        </div>
-        <nav className="UnderlineNav d-flex flex-justify-center">
-          <div className="UnderlineNav-body pt-6">
-            <button
-              className="btn btn-primary"
-              onClick={() => this.handleButtonClicked("assignments")}
-            >
-              Assignments
-            </button>
-            <button
-              className="btn btn-primary"
-              onClick={() => this.handleButtonClicked("students")}
-            >
-              Students
-            </button>
-            <button
-              className="btn btn-primary"
-              onClick={() => this.handleButtonClicked("grades")}
-            >
-              Grades
-            </button>
-          </div>
-        </nav>
-        {tabChoice}
-      </div>
-    );
-  }
-}
-
-export default App;
+export default AppHook;

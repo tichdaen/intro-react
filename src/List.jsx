@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+// eslint-disable-next-line
 export default ({title, placeholder, currList, addFunction}) => {
 
   const [value, setValue] = useState('');
