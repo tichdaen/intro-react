@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+// Node 16으로 다운 그레이드 후 eslint 설정이 약간 변경된듯
 // eslint-disable-next-line
 export default ({title, placeholder, currList, addFunction}) => {
 
