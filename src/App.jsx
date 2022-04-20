@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Table from "./Table";
 import List from "./List";
+import { Link } from "react-router-dom";
 
 const AppHook = () => {
   const [buttonClicked, setButtonClicked] = useState('');
@@ -68,6 +69,8 @@ const AppHook = () => {
     <div>
         <div className="Box Box--spacious f4">
           <div className="Box-header">
+          <Link to="/invoices">Invoices</Link> | {" "}
+          <Link to="/expenses">Expenses</Link>
           <h3 className="Box-title d-flex flex-justify-center">GradeBook</h3>
           </div>
         </div>
