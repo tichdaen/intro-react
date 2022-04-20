@@ -6,6 +6,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import Expenses from './routes/expenses';
 import Invoices from './routes/invoices';
+import Layer from './Layer';
 
 ReactDOM.render(
     <BrowserRouter>
@@ -14,7 +15,9 @@ ReactDOM.render(
             <Route path="expenses" element={<Expenses />} />
             <Route path="invoices" element={<Invoices />}/>
         </Routes>
-    </BrowserRouter>, document.getElementById('root'));
+        <Layer />
+    </BrowserRouter>
+    , document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
