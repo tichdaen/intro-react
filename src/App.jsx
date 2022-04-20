@@ -1,95 +1,71 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Table from "./Table";
 import List from "./List";
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
+const AppHook = () => {
+  const [buttonClicked, setButtonClicked] = useState('');
+  const [assignments, setAssignments] = useState([]);
+  const [students, setStudents] = useState([]);
+  const [grades, setGrades] = useState({});
+  const [tabChoice, setTabChoice] = useState(<div/>);
 
-    this.state = {
-      buttonClicked: "",
-      assignments: [] /*Below this line, add the students state variable*/,
-      students: [],
-      grades: {}
-    };
+  const handleButtonClicked = buttonName => setButtonClicked(buttonName);
 
-    this.handleButtonClicked = this.handleButtonClicked.bind(this);
-    this.addAssignment = this.addAssignment.bind(this);
-    this.addStudent = this.addStudent.bind(this);
-    this.addGrade = this.addGrade.bind(this);
-  }
+  useEffect(() => {
 
-  handleButtonClicked(buttonName) {
-    this.setState({
-      buttonClicked: buttonName
-    });
-  }
 
-  /*Check out this addAssignment method*/
-  addAssignment(assignmentName) {
-    this.setState({
-      assignments: this.state.assignments.concat(assignmentName)
-    });
-  }
+    const addAssignment = assignmentName => setAssignments(assignments.concat(assignmentName));
 
-  /*Write an addStudent method here*/
-  addStudent(studentName) {
-    this.setState({
-      students: this.state.students.concat(studentName) // 왜 하필 concat 을 사용해야 하나
-    })
-  }
+    const addStudent = studentName => setStudents(students.concat(studentName));
 
-  addGrade(assignment, student, score) {
-    let grades = this.state.grades;
-    let assignmentName = assignment;
-    let studentName = student;
-    if (!(assignment in grades)) {
-      grades[assignmentName] = {};
+    const addGrade = (assignment, studentName, score) => {
+      if (!(assignment in grades)) {
+        grades[assignment] = {};
+      }
+      grades[assignment][studentName] = score;
+      setGrades(grades);
     }
-    grades[assignmentName][studentName] = score;
-    this.setState({ grades: grades });
-  }
-
-  render() {  // render 함수는 useEffect 역할을 하는가?
-    let tabChoice = <div />;
-
     /*Uncomment below to render assignments*/
-    if (this.state.buttonClicked === "assignments") {
-      tabChoice = (
+    if (buttonClicked === "assignments") {
+      let choice =
         <List
           placeholder="Add Assignment..."
-          currList={this.state.assignments}
-          addFunction={this.addAssignment}
+          currList={assignments}
+          addFunction={addAssignment}
           title="Assignments"
         />
-      );
+      ;
+      setTabChoice(choice);
     }
     /* Change below to render students*/
-    if (this.state.buttonClicked === "students") {
-      tabChoice = (
+    if (buttonClicked === "students") {
+      let choice =
         <List
           placeholder="Add Student..." 
-          currList={this.state.students}
-          addFunction={this.addStudent}
+          currList={students}
+          addFunction={addStudent}
           title="Student Roster"
         />
-      );
+      ;
+      setTabChoice(choice);
     }
 
     /* Uncomment lines below to render grades*/
-    if (this.state.buttonClicked === "grades") {
-      tabChoice = (
+    if (buttonClicked === "grades") {
+      let choice = 
         <Table
-          tableNames={this.state.assignments}
-          rows={this.state.students}
-          addFunction={this.addGrade}
-          data={this.state.grades}
+          tableNames={assignments}
+          rows={students}
+          addFunction={addGrade}
+          data={grades}
         />
-      );
+      ;
+      setTabChoice(choice);
     }
+  }, [buttonClicked, assignments, students, grades])
 
-    return (
-      <div>
+  return (
+    <div>
         <div className="Box Box--spacious f4">
           <div className="Box-header">
           <h3 className="Box-title d-flex flex-justify-center">GradeBook</h3>
@@ -99,19 +75,19 @@ class App extends React.Component {
           <div className="UnderlineNav-body pt-6">
             <button
               className="btn btn-primary"
-              onClick={() => this.handleButtonClicked("assignments")}
+              onClick={() => handleButtonClicked("assignments")}
             >
               Assignments
             </button>
             <button
               className="btn btn-primary"
-              onClick={() => this.handleButtonClicked("students")}
+              onClick={() => handleButtonClicked("students")}
             >
               Students
             </button>
             <button
               className="btn btn-primary"
-              onClick={() => this.handleButtonClicked("grades")}
+              onClick={() => handleButtonClicked("grades")}
             >
               Grades
             </button>
@@ -119,8 +95,7 @@ class App extends React.Component {
         </nav>
         {tabChoice}
       </div>
-    );
-  }
+  )
 }
 
-export default App;
+export default AppHook;
