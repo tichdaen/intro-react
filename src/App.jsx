@@ -70,7 +70,8 @@ const AppHook = () => {
         <div className="Box Box--spacious f4">
           <div className="Box-header">
           <Link to="/invoices">Invoices</Link> | {" "}
-          <Link to="/expenses">Expenses</Link>
+          <Link to="/expenses">Expenses</Link> | {" "}
+          <Link to="/hooks">Hooks</Link>
           <h3 className="Box-title d-flex flex-justify-center">GradeBook</h3>
           </div>
         </div>

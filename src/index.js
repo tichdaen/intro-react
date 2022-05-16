@@ -7,6 +7,7 @@ import * as serviceWorker from './serviceWorker';
 import Expenses from './routes/expenses';
 import Invoices from './routes/invoices';
 import Layer from './Layer';
+import Hooks from './routes/hooks';
 
 ReactDOM.render(
     <BrowserRouter>
@@ -14,6 +15,7 @@ ReactDOM.render(
             <Route path="/" element={<App/>} />
             <Route path="expenses" element={<Expenses />} />
             <Route path="invoices" element={<Invoices />}/>
+            <Route path="hooks" element={<Hooks />}/>
             <Route path="*" element={
                 <main style={{ padding: "1rem" }}>
                     <p>There's nothing here</p>
